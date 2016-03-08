@@ -1,11 +1,8 @@
 package conf
 
-import (
-	"github.com/takecy/git-grouping/conf"
-	"github.com/takecy/go-localconfig/conf"
-)
+import lc "github.com/takecy/go-localconfig/conf"
 
-var lc *localconf.Conf
+var cc *lc.Conf
 
 type AppConf struct {
 	// config directory path
@@ -23,19 +20,24 @@ type Group struct {
 	Repos []string
 }
 
-func New() (c *AppConf) {
-	conf.New()
+// New is init
+func New() *AppConf {
+	cc = lc.NewConfig("ggp", "")
+	app, err := Load()
+	if err != nil {
+		panic(err)
+	}
+	return &app
+}
 
-	c = &Conf{}
+// Load is load onfing from local
+func Load() (app AppConf, err error) {
+	err = cc.Load(&app)
 	return
 }
 
-func (c *Conf) Load() (app AppConf, err error) {
-	err = lconf.Load(&app)
-	return
-}
-
-func (c *Conf) Save(c AppConf) (err error) {
-	err = lconf.Save(&c)
+// Save is save config to local
+func Save(c AppConf) (err error) {
+	err = cc.Save(&c)
 	return
 }
