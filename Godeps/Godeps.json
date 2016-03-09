@@ -6,8 +6,16 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/google/subcommands",
+			"Rev": "8c479d7744eb3c43225d2117beb46b453c83e1f3"
+		},
+		{
 			"ImportPath": "github.com/takecy/go-localconfig/conf",
 			"Rev": "2716e5381be57273cedf56fc76cb15b8d77f51f2"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "2e9cee70ee697e0a2ef894b560dda50dec7dff58"
 		}
 	]
 }
