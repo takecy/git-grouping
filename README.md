@@ -10,9 +10,13 @@
 
 <br/>
 ### Motivation 
-`microservice` is composed of many of the repository.  
-`api` `web` `app` `proxy` `queue` etc...    
-I want to manage by grouping the repository to compose the same function.  
+The microservice is composed by many of the repository.  
+`api` `web` `sp_app` `proxy` `queue` etc...    
+also `api` component is composed by many of repository.   
+`core` `fornt` `batch` `cache` etc...  
+also `core` component is ///
+
+I want to manage by grouping the repository to compose the same function or component.  
 
 
 <br/>
@@ -29,19 +33,37 @@ $ go get github.com/takecy/git-grouping/...
 
 <br/>
 ### Usage
-Print version.
+All usages 
+```
+$ ggp
+```
+
+Print version. [latest is here.](https://github.com/takecy/git-grouping/releases)
 ```
 $ ggp version
 ```
 
+Show all groups.
+```
+$ ggp ls
+```
+Show group info.
+```
+$ ggp info apis
+```
+
 Add current repository to group.
 ```
-$ ggp add . apis
+$ ggp add apis .
+```
+Add specifi repository to group.
+```
+$ ggp add /git/your/cool-tools
 ```
 
 Remove current repository from group
 ```
-$ ggp del . apis
+$ ggp del apis .
 ```
 
 Execute command to gourped repositories.
@@ -49,6 +71,18 @@ Execute command to gourped repositories.
 $ ggp exec apis status
 $ ggp exec apis fetch --all -p
 ```
+
+<br/>
+### Development
+Vendoring by [godep](https://github.com/tools/godep).
+```
+$ git clone git@github.com:takecy/git-grouping.git
+$ cd git-grouping
+$ make install_tools
+$ godep restore
+$ go run ggp/main.go
+```
+
 
 <br/>
 ### License

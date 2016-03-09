@@ -1,0 +1,13 @@
+{
+	"ImportPath": "github.com/takecy/git-grouping",
+	"GoVersion": "go1.6",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/takecy/go-localconfig/conf",
+			"Rev": "2716e5381be57273cedf56fc76cb15b8d77f51f2"
+		}
+	]
+}
