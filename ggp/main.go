@@ -2,41 +2,49 @@ package main
 
 import (
 	"flag"
+	"os"
 
-	"github.com/takecy/git-grouping/cli"
+	"golang.org/x/net/context"
+
+	"github.com/google/subcommands"
+	"github.com/takecy/git-grouping/cmds"
 	"github.com/takecy/git-grouping/conf"
 )
 
 var (
-	verbose = flag.Bool("v", false, "show verbose log")
+	verbose = flag.Bool("v", false, "Print verbose log")
+	ver     = "0.0.1"
 )
 
 type ggp struct {
 	// verbose logging
 	v bool
 
-	// client
-	c *cli.Cli
-
 	// configuration
-	con *conf.Conf
+	con *conf.AppConf
 }
 
 func main() {
-	flag.Parse()
-
-	err := (&ggp{
+	(&ggp{
 		v:   *verbose,
-		c:   cli.New(),
 		con: conf.New(),
 	}).run()
-
-	if err != nil {
-		panic(err)
-	}
 }
 
-func (g *ggp) run() (err error) {
+func (g *ggp) run() {
+	subcommands.Register(subcommands.HelpCommand(), "")
+	subcommands.Register(subcommands.FlagsCommand(), "")
+	subcommands.Register(subcommands.CommandsCommand(), "")
+	subcommands.Register(&cmds.VersionCmd{Version: ver}, "")
+	subcommands.Register(&cmds.AddCmd{}, "")
+	subcommands.Register(&cmds.ConfigCmd{}, "")
+	subcommands.Register(&cmds.ExecCmd{}, "")
+	subcommands.Register(&cmds.InfoCmd{}, "")
+	subcommands.Register(&cmds.LsCmd{}, "")
+	subcommands.Register(&cmds.RmCmd{}, "")
 
-	return
+	flag.Parse()
+
+	ctx := context.Background()
+	os.Exit(int(subcommands.Execute(ctx)))
 }

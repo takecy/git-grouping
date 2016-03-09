@@ -63,7 +63,7 @@ $ ggp add /git/your/cool-tools
 
 Remove current repository from group
 ```
-$ ggp del apis .
+$ ggp rm apis .
 ```
 
 Execute command to gourped repositories.

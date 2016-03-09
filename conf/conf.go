@@ -2,42 +2,47 @@ package conf
 
 import lc "github.com/takecy/go-localconfig/conf"
 
-var cc *lc.Conf
-
+// AppConf is app configuration
 type AppConf struct {
-	// config directory path
-	Dir string
+	// local configuration
+	Lc LocalConf
+
+	// lc
+	cc *lc.Conf
 }
 
+// LocalConf is local configuration
+type LocalConf struct {
+	Groups []Group `json:"groups"`
+}
+
+// Group is repository group
 type Group struct {
 	// group id
-	ID string
+	ID string `json:"id"`
 
 	// group name
-	Name string
+	Name string `json:"name"`
 
 	// grouped repositories
-	Repos []string
+	Repos []string `json:"repos"`
 }
 
 // New is init
 func New() *AppConf {
-	cc = lc.NewConfig("ggp", "")
-	app, err := Load()
-	if err != nil {
-		panic(err)
+	return &AppConf{
+		cc: lc.NewConfig("ggp", ""),
 	}
-	return &app
 }
 
 // Load is load onfing from local
-func Load() (app AppConf, err error) {
-	err = cc.Load(&app)
+func (a *AppConf) Load() (app LocalConf, err error) {
+	err = a.cc.Load(&app)
 	return
 }
 
 // Save is save config to local
-func Save(c AppConf) (err error) {
-	err = cc.Save(&c)
+func (a *AppConf) Save(c LocalConf) (err error) {
+	err = a.cc.Save(&c)
 	return
 }
