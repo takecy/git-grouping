@@ -22,7 +22,8 @@ func (*RmCmd) Synopsis() string {
 }
 
 func (*RmCmd) Usage() string {
-	return `rm <group> <repository>`
+	return `rm <group> <repository>
+`
 }
 
 func (p *RmCmd) SetFlags(f *flag.FlagSet) {

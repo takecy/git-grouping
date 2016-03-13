@@ -24,11 +24,16 @@ I want to manage by grouping the repository to compose the same function or comp
 
 #### via Go
 ```
-$ go get github.com/takecy/git-grouping/...
+$ go get github.com/takecy/git-grouping/ggp
 ```
 
 #### via Binary
 [Download](https://github.com/takecy/git-grouping/releases) and Copy to your `$PATH`.
+
+
+### UnInstall
+Delete your `ggp` binary.  
+And delete `$HOME/.ggp` directory.  
 
 
 <br/>

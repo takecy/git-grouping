@@ -22,7 +22,8 @@ func (*LsCmd) Synopsis() string {
 }
 
 func (*LsCmd) Usage() string {
-	return `ls`
+	return `ls
+`
 }
 
 func (p *LsCmd) SetFlags(f *flag.FlagSet) {

@@ -25,7 +25,8 @@ func (*VersionCmd) Synopsis() string {
 }
 
 func (*VersionCmd) Usage() string {
-	return `version`
+	return `version
+`
 }
 
 func (p *VersionCmd) SetFlags(f *flag.FlagSet) {

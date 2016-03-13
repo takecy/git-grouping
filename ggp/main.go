@@ -32,16 +32,17 @@ func main() {
 }
 
 func (g *ggp) run() {
-	subcommands.Register(subcommands.HelpCommand(), "")
-	subcommands.Register(subcommands.FlagsCommand(), "")
-	subcommands.Register(subcommands.CommandsCommand(), "")
-	subcommands.Register(&cmds.VersionCmd{Version: ver}, "")
-	subcommands.Register(&cmds.AddCmd{}, "")
-	subcommands.Register(&cmds.ConfigCmd{}, "")
-	subcommands.Register(&cmds.ExecCmd{}, "")
-	subcommands.Register(&cmds.InfoCmd{}, "")
-	subcommands.Register(&cmds.LsCmd{}, "")
-	subcommands.Register(&cmds.RmCmd{}, "")
+	g.con.Load()
+
+	subcommands.Register(subcommands.HelpCommand(), "base")
+	subcommands.Register(subcommands.FlagsCommand(), "base")
+	subcommands.Register(subcommands.CommandsCommand(), "base")
+	subcommands.Register(&cmds.VersionCmd{Version: ver}, "config")
+	subcommands.Register(&cmds.AddCmd{Con: g.con}, "config")
+	subcommands.Register(&cmds.GitCmd{Con: g.con}, "git")
+	subcommands.Register(&cmds.InfoCmd{Con: g.con}, "config")
+	subcommands.Register(&cmds.LsCmd{Con: g.con}, "config")
+	subcommands.Register(&cmds.RmCmd{Con: g.con}, "config")
 
 	flag.Parse()
 

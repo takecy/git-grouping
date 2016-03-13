@@ -24,7 +24,8 @@ func (*AddCmd) Synopsis() string {
 }
 
 func (*AddCmd) Usage() string {
-	return `add <group name> <dir path>`
+	return `add <group name> <dir path>
+`
 }
 
 func (p *AddCmd) SetFlags(f *flag.FlagSet) {
