@@ -11,7 +11,8 @@
 		},
 		{
 			"ImportPath": "github.com/takecy/go-localconfig/conf",
-			"Rev": "2716e5381be57273cedf56fc76cb15b8d77f51f2"
+			"Comment": "0.1.0",
+			"Rev": "76a1ecfd3862515376c17de2c78cc04f8cd2c190"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",

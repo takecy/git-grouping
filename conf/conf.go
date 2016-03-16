@@ -1,6 +1,12 @@
 package conf
 
-import lc "github.com/takecy/go-localconfig/conf"
+import (
+	"errors"
+	"fmt"
+	"time"
+
+	lc "github.com/takecy/go-localconfig/conf"
+)
 
 // AppConf is app configuration
 type AppConf struct {
@@ -14,6 +20,38 @@ type AppConf struct {
 // LocalConf is local configuration
 type LocalConf struct {
 	Groups []Group `json:"groups"`
+}
+
+// Get is get by name
+func (gs *LocalConf) Get(name string) (g Group) {
+	if gs == nil {
+		return
+	}
+
+	for _, g := range gs.Groups {
+		if name == g.Name {
+			return g
+		}
+	}
+
+	return
+}
+
+// Add is add repo to group
+func (gs *LocalConf) Add(group, repo string) (err error) {
+	if gs == nil {
+		return errors.New("null.receiver")
+	}
+
+	for _, g := range gs.Groups {
+		if group == g.Name {
+			g.Repos = append(g.Repos, repo)
+			return
+		}
+	}
+
+	gs.Groups = append(gs.Groups, Group{ID: fmt.Sprintf("id-%d", time.Now().Unix()), Name: group, Repos: []string{repo}})
+	return
 }
 
 // Group is repository group
@@ -36,8 +74,8 @@ func New() *AppConf {
 }
 
 // Load is load onfing from local
-func (a *AppConf) Load() (app LocalConf, err error) {
-	err = a.cc.Load(&app)
+func (a *AppConf) Load() (err error) {
+	err = a.cc.Load(&a.Lc)
 	return
 }
 

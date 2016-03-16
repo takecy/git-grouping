@@ -3,12 +3,15 @@ package cmds
 import (
 	"flag"
 	"fmt"
-	"strings"
+	"os"
 
 	"github.com/google/subcommands"
 	"github.com/takecy/git-grouping/conf"
+	"github.com/tj/go-debug"
 	"golang.org/x/net/context"
 )
+
+var ad = debug.Debug("ggp:cmds:add")
 
 // AddCmd is cmd struct
 type AddCmd struct {
@@ -32,10 +35,30 @@ func (p *AddCmd) SetFlags(f *flag.FlagSet) {
 }
 
 func (p *AddCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	for _, arg := range f.Args() {
-		arg = strings.ToUpper(arg)
-		fmt.Printf("%s ", arg)
+	group := f.Arg(0)
+	dir := f.Arg(1)
+
+	ad("group:%s dir:%s", group, dir)
+
+	if group == "" && dir == "" {
+		fmt.Fprintf(os.Stdout, "group and directory required.\n")
+		return subcommands.ExitFailure
 	}
-	fmt.Println()
+
+	err := p.Con.Lc.Add(group, dir)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "add.failed:%v\n", err)
+		return subcommands.ExitFailure
+	}
+	ad("added")
+	ad("ls:%+v", p.Con.Lc)
+
+	err = p.Con.Save(p.Con.Lc)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "save.failed:%v\n", err)
+		return subcommands.ExitFailure
+	}
+	ad("saved")
+
 	return subcommands.ExitSuccess
 }

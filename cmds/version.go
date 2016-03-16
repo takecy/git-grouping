@@ -33,6 +33,6 @@ func (p *VersionCmd) SetFlags(f *flag.FlagSet) {
 }
 
 func (p *VersionCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	fmt.Printf("git-grouping:v%s \nruntime:%s\n", p.Version, runtime.Version())
+	fmt.Printf("ggp:v%s \nruntime:%s\n", p.Version, runtime.Version())
 	return subcommands.ExitSuccess
 }

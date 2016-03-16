@@ -13,7 +13,8 @@ import (
 
 // GitCmd is cmd struct
 type GitCmd struct {
-	Con *conf.AppConf
+	Con   *conf.AppConf
+	group string
 }
 
 func (*GitCmd) Name() string {
@@ -25,11 +26,12 @@ func (*GitCmd) Synopsis() string {
 }
 
 func (*GitCmd) Usage() string {
-	return `git <git command> [git options]
+	return `git [--gg group_name] <git command> [git options]
 `
 }
 
 func (p *GitCmd) SetFlags(f *flag.FlagSet) {
+	f.StringVar(&p.group, "gg", "", "Target group")
 }
 
 func (p *GitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -38,19 +40,35 @@ func (p *GitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) s
 		return subcommands.ExitFailure
 	}
 
-	gitCmd := f.Arg(0)
-	gitOps := f.Args()[1:]
-	cmdArgs := append([]string{gitCmd}, gitOps...)
-	c := exec.Command("git", cmdArgs...)
-	c.Stdin = os.Stdin
-	c.Stdout = os.Stdout
-	c.Stderr = os.Stderr
-
-	err := c.Run()
-
-	if err != nil {
+	group := p.group
+	if group == "" {
+		fmt.Fprintf(os.Stderr, "group name required.\n")
 		return subcommands.ExitFailure
 	}
+
+	g := p.Con.Lc.Get(group)
+
+	gitCmd := f.Arg(1)
+	gitOps := f.Args()[2:]
+	cmdArgs := append([]string{gitCmd}, gitOps...)
+
+	for _, d := range g.Repos {
+		os.Chdir(d)
+		cd, _ := os.Getwd()
+		fmt.Fprintf(os.Stdout, "repo:%v\n", cd)
+
+		c := exec.Command("git", cmdArgs...)
+		c.Stdin = os.Stdin
+		c.Stdout = os.Stdout
+		c.Stderr = os.Stderr
+
+		err := c.Run()
+
+		if err != nil {
+			return subcommands.ExitFailure
+		}
+	}
+
 	return subcommands.ExitSuccess
 }
 
