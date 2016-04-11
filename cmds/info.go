@@ -1,8 +1,8 @@
 package cmds
 
 import (
-	"flag"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"os"
 
@@ -37,6 +37,6 @@ func (p *InfoCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) 
 	if err != nil {
 		return subcommands.ExitFailure
 	}
-	fmt.Fprintf(os.Stdout, "grouping info: %s\n", string(b))
+	fmt.Fprintf(os.Stdout, "grouping info:\n %s\n", string(b))
 	return subcommands.ExitSuccess
 }

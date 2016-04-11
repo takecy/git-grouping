@@ -56,6 +56,7 @@ func (g *ggp) run() {
 	subcommands.Register(&cmds.InfoCmd{Con: g.con}, "ggp")
 	subcommands.Register(&cmds.LsCmd{Con: g.con}, "ggp")
 	subcommands.Register(&cmds.RmCmd{Con: g.con}, "ggp")
+	subcommands.Register(&cmds.RmgCmd{Con: g.con}, "ggp")
 
 	flag.Parse()
 

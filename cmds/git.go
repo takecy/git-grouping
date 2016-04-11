@@ -8,8 +8,11 @@ import (
 
 	"github.com/google/subcommands"
 	"github.com/takecy/git-grouping/conf"
+	"github.com/tj/go-debug"
 	"golang.org/x/net/context"
 )
+
+var gd = debug.Debug("ggp:cmds:git")
 
 // GitCmd is cmd struct
 type GitCmd struct {
@@ -48,13 +51,16 @@ func (p *GitCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) s
 
 	g := p.Con.Lc.Get(group)
 
-	gitCmd := f.Arg(1)
-	gitOps := f.Args()[2:]
+	gd("args:%v", f.Args())
+
+	gitCmd := f.Arg(0)
+	gitOps := f.Args()[1:]
 	cmdArgs := append([]string{gitCmd}, gitOps...)
 
 	for _, d := range g.Repos {
 		os.Chdir(d)
 		cd, _ := os.Getwd()
+		fmt.Fprintf(os.Stdout, "cmds:%v\n", cmdArgs)
 		fmt.Fprintf(os.Stdout, "repo:%v\n", cd)
 
 		c := exec.Command("git", cmdArgs...)

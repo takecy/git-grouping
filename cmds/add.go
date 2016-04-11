@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path"
+	"path/filepath"
 
 	"github.com/google/subcommands"
 	"github.com/takecy/git-grouping/conf"
@@ -23,7 +25,7 @@ func (*AddCmd) Name() string {
 }
 
 func (*AddCmd) Synopsis() string {
-	return "Add group to repository"
+	return "Add repository to group"
 }
 
 func (*AddCmd) Usage() string {
@@ -35,17 +37,31 @@ func (p *AddCmd) SetFlags(f *flag.FlagSet) {
 }
 
 func (p *AddCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	if f.NArg() < 2 {
+		fmt.Fprint(os.Stderr, "not enough args.\n")
+		return subcommands.ExitFailure
+	}
+
 	group := f.Arg(0)
-	dir := f.Arg(1)
+	dirPath := f.Arg(1)
 
-	ad("group:%s dir:%s", group, dir)
+	if !path.IsAbs(dirPath) {
+		aPath, err := filepath.Abs(dirPath)
+		if err != nil {
+			fmt.Fprint(os.Stderr, "invalid path.\n")
+			return subcommands.ExitFailure
+		}
+		dirPath = aPath
+	}
 
-	if group == "" && dir == "" {
+	ad("group:%s dir:%s", group, dirPath)
+
+	if group == "" && dirPath == "" {
 		fmt.Fprintf(os.Stdout, "group and directory required.\n")
 		return subcommands.ExitFailure
 	}
 
-	err := p.Con.Lc.Add(group, dir)
+	err := p.Con.Lc.Add(group, dirPath)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "add.failed:%v\n", err)
 		return subcommands.ExitFailure
