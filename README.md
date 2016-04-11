@@ -73,8 +73,8 @@ $ ggp rm apis .
 
 Execute command to gourped repositories.
 ```
-$ ggp exec apis status
-$ ggp exec apis fetch --all -p
+$ ggp git --gg apis status
+$ ggp git --gg apis fetch --all -p
 ```
 
 <br/>
