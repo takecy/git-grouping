@@ -1,13 +1,27 @@
 {
 	"ImportPath": "github.com/takecy/git-grouping",
 	"GoVersion": "go1.6",
+	"GodepVersion": "v60",
 	"Packages": [
 		"./..."
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/fatih/color",
+			"Comment": "v0.1-12-g9aae6aa",
+			"Rev": "9aae6aaa22315390f03959adca2c4d395b02fcef"
+		},
+		{
 			"ImportPath": "github.com/google/subcommands",
 			"Rev": "8c479d7744eb3c43225d2117beb46b453c83e1f3"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Rev": "3dac7b4f76f6e17fb39b768b89e3783d16e237fe"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Rev": "3f7a6730f55096ff7cd34816f520d9f4517e95ea"
 		},
 		{
 			"ImportPath": "github.com/takecy/go-localconfig/conf",
@@ -15,8 +29,17 @@
 			"Rev": "76a1ecfd3862515376c17de2c78cc04f8cd2c190"
 		},
 		{
+			"ImportPath": "github.com/tj/go-debug",
+			"Comment": "v2.0.0",
+			"Rev": "ff4a55a20a86994118644bbddc6a216da193cc13"
+		},
+		{
 			"ImportPath": "golang.org/x/net/context",
 			"Rev": "2e9cee70ee697e0a2ef894b560dda50dec7dff58"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "833a04a10549a95dc34458c195cbad61bbb6cb4d"
 		}
 	]
 }
