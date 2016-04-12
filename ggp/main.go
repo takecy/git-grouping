@@ -51,10 +51,10 @@ func (g *ggp) run() {
 	subcommands.Register(subcommands.FlagsCommand(), "base")
 	subcommands.Register(subcommands.CommandsCommand(), "base")
 	subcommands.Register(&cmds.VersionCmd{Version: ver}, "ggp")
-	subcommands.Register(&cmds.AddCmd{Con: g.con}, "ggp")
-	subcommands.Register(&cmds.GitCmd{Con: g.con}, "ggp")
 	subcommands.Register(&cmds.InfoCmd{Con: g.con}, "ggp")
 	subcommands.Register(&cmds.LsCmd{Con: g.con}, "ggp")
+	subcommands.Register(&cmds.GitCmd{Con: g.con}, "ggp")
+	subcommands.Register(&cmds.AddCmd{Con: g.con}, "ggp")
 	subcommands.Register(&cmds.RmCmd{Con: g.con}, "ggp")
 	subcommands.Register(&cmds.RmgCmd{Con: g.con}, "ggp")
 
