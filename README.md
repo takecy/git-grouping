@@ -12,6 +12,7 @@ For the group, You can Git command is run.
 ![](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 
 <br/>
+
 ### Motivation
 The microservice is composed by many of the repository.  
 `api` `web` `sp_app` `proxy` `queue` etc...    
@@ -23,6 +24,7 @@ I want to manage by grouping the repository to compose the same function or comp
 
 
 <br/>
+
 ### Install
 
 #### via Go
@@ -40,6 +42,7 @@ And delete `$HOME/.ggp` directory.
 
 
 <br/>
+
 ### Usage
 All usages
 ```
@@ -61,6 +64,7 @@ add <group name> <dir path>
 ```
 
 <br/>
+
 #### Example
 Show all groups.
 ```
@@ -97,6 +101,7 @@ $ ggp git --gg apis fetch --all -p
 ```
 
 <br/>
+
 ### Development
 Vendoring by [godep](https://github.com/tools/godep).
 ```
@@ -109,5 +114,6 @@ $ DEBUG=* go run ggp/main.go
 
 
 <br/>
+
 ### License
 [MIT](./LICENSE)
